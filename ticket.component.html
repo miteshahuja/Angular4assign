@@ -1,0 +1,57 @@
+<article *ngIf="showData">
+    <h1 *ngIf = "searchStart" class="col-md-12">{{searchDetail.origin}} - {{searchDetail.destination}} <span *ngIf="searchDetail.arrDate != ''">- {{searchDetail.origin}}</span></h1>
+    
+    <h5 *ngIf = "searchStart" class="col-md-12 d-inline-block">
+        <div class="float-left col-md-3 col-xs-6">
+                {{(arrivingFlights != '') ? departingFlights.length + arrivingFlights.length : departingFlights.length}} results found.
+        </div>
+        <div class="float-right col-md-5 col-xs-6 text-right font-small">
+                <span class="col-md-12 col-xs-12 float-right">Depart: {{searchDetail.depDate | date}}</span> 
+                <span class="col-md-12 col-xs-12 float-right" *ngIf = "searchDetail.arrDate != ''"> Return : {{searchDetail.arrDate | date}} </span>
+        </div>
+    </h5>
+    <div *ngIf = "!searchStart"> <h2 class="">{{Message}}</h2> </div>
+    <div class="float-left" [ngClass]="(arrivingFlights != '') ? 'col-md-6 col-xs-12' : 'col-md-12 col-xs-12'">
+
+        <mat-grid-list cols="1" rowHeight="160px">
+            <mat-grid-tile *ngFor = "let ticket of departingFlights">
+                <div class="ticketTile col-md-12">
+                    <ul class="tileLeft float-left col-md-6">
+                        <li *ngIf = "searchStart"><h2>{{ticket.rate * searchDetail.passengers | currency : '&#8360;' : 2}}</h2></li>
+                        <li *ngIf = "!searchStart"><h2>{{ticket.rate | currency : '&#8360;' : 2}}</h2></li>
+                        <li class="ticketName">{{ticket.name}}</li>
+                        <li class="ticketRoute font-weight-bold">{{ticket.origin}} > {{ticket.destination}}</li>
+                        <li class="ticketDtime">Depart: {{ticket.depart}}</li>
+                        <li class="ticketAtime">Arrive: {{ticket.arrive}}</li>
+                    </ul>
+                    <ul class="tileRight float-right col-md-3">
+                        <img src="../src/assets/img/flighImg.png" class="imageBox float-right my-2 rounded"/>
+                        <button mat-button mat-raised-button color="primary" class="float-right">Select Flight</button>
+                    </ul>
+                </div>
+            </mat-grid-tile>
+        </mat-grid-list>
+    </div>
+      <div *ngIf="arrivingFlights != ''" class="col-md-6 col-xs-12 float-right">
+        <mat-grid-list cols="1" rowHeight="160px">        
+            <mat-grid-tile *ngFor = "let ticket of arrivingFlights" >
+                <div class="ticketTile col-md-12">
+                    <ul class="tileLeft float-left col-md-6 col-xs-12">
+                        <li *ngIf = "searchStart"><h2>{{ticket.rate * searchDetail.passengers | currency : '&#8360;' : 2}}</h2></li>
+                        <li *ngIf = "!searchStart"><h2>{{ticket.rate | currency : '&#8360;' : 2}}</h2></li>
+                        <li class="ticketName">{{ticket.name}}</li>
+                        <li class="ticketRoute font-weight-bold">{{ticket.origin}} > {{ticket.destination}}</li>
+                        <li class="ticketDtime">Depart: {{ticket.depart}}</li>
+                        <li class="ticketAtime">Arrive: {{ticket.arrive}}</li>
+                    </ul>
+                    <ul class="tileRight float-right col-md-3 col-xs-3">
+                        <img src="../src/assets/img/flighImg.png" class="imageBox float-right my-2 rounded"/>
+                        <button mat-button mat-raised-button color="primary" class="float-right">Select Flight</button>
+                    </ul>
+                </div>
+          </mat-grid-tile>
+    </mat-grid-list> 
+      </div>
+    
+      
+</article>

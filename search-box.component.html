@@ -1,0 +1,91 @@
+<article class="searchBox col-md-12 pull-left">
+    <form>
+    <!-- One Way -->
+
+    <mat-tab-group #tabGroup>
+        <mat-tab label="One Way">
+            <form class="example-form border rounded p-2" (ngSubmit)="submitSearch(searchForm)" #searchForm = "ngForm">
+            <mat-form-field class="col-md-12 col-xs-12">
+                <input matInput [(ngModel)]="origin" required placeholder="Enter Origin City" aria-label="City" [matAutocomplete]="auto" name="origin" [formControl]="cityCtrl">
+                <mat-autocomplete #auto="matAutocomplete">
+                  <mat-option *ngFor="let city of filteredCities | async" [value]="city.value">
+                    <span>{{ city.name }}</span>
+                  </mat-option>
+                </mat-autocomplete>
+              </mat-form-field>
+              <mat-form-field class="col-md-12 col-xs-12">
+                <input matInput [(ngModel)]="destination" required placeholder="Enter Destination City" aria-label="DestCity" name ="destination" [matAutocomplete]="autoDest" [formControl]="dCityCtrl">
+                <mat-autocomplete #autoDest="matAutocomplete">
+                  <mat-option *ngFor="let city of filteredDestCities | async" [value]="city.value">
+                    <span>{{ city.name }}</span>
+                  </mat-option>
+                </mat-autocomplete>
+              </mat-form-field>
+                <mat-form-field class="col-md-12">
+                  <input matInput [(ngModel)]="depDate" required [matDatepicker]="picker1" placeholder="Departure date" name="depDate">
+                  <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+                  <mat-datepicker #picker1></mat-datepicker>
+                </mat-form-field>
+                <mat-form-field class="col-md-12">
+                  <mat-select [(ngModel)]="passengers" required placeholder="Passengers" name="passengers">
+                    <mat-option value="1">1</mat-option>
+                    <mat-option value="2">2</mat-option>
+                    <mat-option value="3">3</mat-option>
+                    <mat-option value="4">4</mat-option>
+                  </mat-select>
+                </mat-form-field>
+                <button type='submit' mat-button mat-raised-button color="primary" [disabled]="searchForm.status != 'VALID'">Search</button>
+      <button type='reset' mat-button mat-raised-button color="basic" (click) = "resetSearch()" >Reset</button>
+                </form>
+        </mat-tab>
+        <mat-tab label="Return">
+         <!-- Return -->
+         <form class="example-form border rounded p-2" (ngSubmit)="submitSearch(searchFormRet)" #searchFormRet = "ngForm">
+      <mat-form-field class="col-md-12">
+          <input matInput [(ngModel)]="originRet" required placeholder="Enter Origin City" aria-label="cityRet" [matAutocomplete]="autoRet" name="originRet" [formControl]="cityCtrlRet">
+          <mat-autocomplete #autoRet="matAutocomplete">
+            <mat-option *ngFor="let city of filteredCitiesRet | async" [value]="city.value">
+              <span>{{ city.name }}</span>
+            </mat-option>
+          </mat-autocomplete>
+        </mat-form-field>
+        <mat-form-field class="col-md-12">
+          <input matInput [(ngModel)]="destinationRet" required placeholder="Enter Destination City" aria-label="destCityRet" name="destinationRet" [matAutocomplete]="autoDestRet" [formControl]="dCityCtrlRet">
+          <mat-autocomplete #autoDestRet="matAutocomplete">
+            <mat-option *ngFor="let city of filteredDestCitiesRet | async" [value]="city.value">
+              <span>{{ city.name }}</span>
+            </mat-option>
+          </mat-autocomplete>
+        </mat-form-field>
+          <mat-form-field class="col-md-6 col-xs-12">
+            <input matInput [(ngModel)]="depDateRet" required [matDatepicker]="pickerReturn1" placeholder="Departure date" name="depDateRet" [formControl]="depDateRetCtrl">
+            <mat-datepicker-toggle matSuffix [for]="pickerReturn1"></mat-datepicker-toggle>
+            <mat-datepicker #pickerReturn1></mat-datepicker>
+          </mat-form-field>
+          <mat-form-field class="col-md-5 col-xs-12">
+            <input matInput [(ngModel)]="arrDateRet" required [matDatepicker]="pickerReturn2" placeholder="Return date" name="arrDateRet" [min]="depDateRetCtrl.value">
+            <mat-datepicker-toggle matSuffix [for]="pickerReturn2"></mat-datepicker-toggle>
+            <mat-datepicker #pickerReturn2 [startAt]= "depDateRetCtrl.value"></mat-datepicker>
+          </mat-form-field>
+          <mat-form-field class="col-md-12">
+            <mat-select placeholder="Passengers" required [(ngModel)]="passengersRet" name="passengersRet">
+              <mat-option value="1">1</mat-option>
+              <mat-option value="2">2</mat-option>
+              <mat-option value="3">3</mat-option>
+              <mat-option value="4">4</mat-option>
+            </mat-select>
+          </mat-form-field>
+
+          <button type='submit' mat-button mat-raised-button color="primary" [disabled]="searchFormRet.status != 'VALID'">Search</button>
+      <button type='reset' mat-button mat-raised-button color="basic" (click) = "resetSearch()" >Reset</button>
+        </form>
+        </mat-tab>
+      </mat-tab-group>
+          
+      <div class="slider-box border rounded p-2 m-2 ">
+        <h3> Refine Flight Search</h3>
+        <mat-slider [min]="sliderMin" [max]="sliderMax" [step]="sliderStep" thumbLabel [tickInterval]="sliderTickInterval" (change) ="refineSearch()" [value]="sliderMax" name="refineSlider" [(ngModel)] ="searchRefine" ></mat-slider>
+        {{searchRefine | currency : '&#8360;' : 2}}
+      </div>
+      </form>
+    </article>
