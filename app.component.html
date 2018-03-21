@@ -1,0 +1,19 @@
+<!--The content below is only a placeholder and can be replaced.-->
+<div class="container-fluid border-bottom">
+  <h1 class="col-md-6 p-2 m-2">
+    {{ title }}
+  </h1>
+  <div class="col-md-4 float-left mt-3 pt-2">
+  
+    <app-search-box (searchDetailsEmitter)="getSearchDetail($event)" (refineSearchEmitter)="getRefineSearch($event)"> </app-search-box>
+  </div>
+
+  <div class="col-md-7 float-right mt-3 pt-2 mb-3 border-left">
+    <app-ticket [searchDetail]="searchSet" [refineSearch]="refineSearchValue"></app-ticket>
+  </div>
+
+</div>
+<ul>
+
+</ul>
+
